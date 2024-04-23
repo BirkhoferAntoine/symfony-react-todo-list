@@ -100,7 +100,7 @@ function TodoTable() {
                         </TableCell>
                         <TableCell>
                             <form>
-                                <TextField label={"New Task"}
+                                <TextField label={"Description"}
                                            type={'text'}
                                            value={addTodoDescription}
                                            onChange={(event) => {
@@ -136,11 +136,11 @@ function TodoTable() {
 
                                         <TableCell>
                                             <form>{/*onSubmit={onEditSubmit}*/}
-                                                <TextField fullWidth multiline
+                                                <TextField fullWidth autoFocus
                                                            type={'text'}
-                                                           value={editTodoDescription}
+                                                           value={editTodoTask}
                                                            onChange={(event) => {
-                                                               setEditTodoDescription(event.target.value);
+                                                               setEditTodoTask(event.target.value)
                                                            }}
                                                     /*InputProps={{
                                                         endAdornment:
@@ -157,12 +157,13 @@ function TodoTable() {
                                         </TableCell>
                                         <TableCell>
                                             <form>
-                                                <TextField fullWidth autoFocus
+                                                <TextField fullWidth multiline
                                                            type={'text'}
-                                                           value={editTodoTask}
+                                                           value={editTodoDescription}
                                                            onChange={(event) => {
-                                                               setEditTodoTask(event.target.value)
+                                                               setEditTodoDescription(event.target.value);
                                                            }}
+
                                                 />
                                             </form>
                                         </TableCell>

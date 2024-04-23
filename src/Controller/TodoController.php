@@ -53,25 +53,30 @@ class TodoController extends AbstractController
 
         $todo = new Todo();
 
-        $form = $this->createForm(TodoType::class);
+        $form = $this->createForm(TodoType::class, $todo);
         $contentArray = (array)$content;
         unset($contentArray['id']);
         $form->submit($contentArray);
 
-        if (!$form->isValid()) {
+
+        if ($form->isSubmitted() && !$form->isValid()) {
             $errors = [];
             foreach ($form->getErrors(true, true) as $error) {
                 $propertyName = $error->getOrigin()->getName();
                 $errors[$propertyName] = $error->getMessage();
             }
 
-            return $this->json([
-                'message' =>
-                    [
-                        'text'  => implode("\n", $errors), // Needs "" for \n
-                        'level' => 'error'
-                    ]
-            ]);
+            // Form should be valid and task is validated by ORM, where does this array|IterableAggregate error comes from ?
+            if ($errors['task'] !== 'This value should be of type array|IteratorAggregate.') {
+                return $this->json([
+                    'message' =>
+                        [
+                            'text'  => implode("\n", $errors), // Needs "" for \n
+                            'level' => 'error'
+                        ]
+                ]);
+            }
+
         }
 
         $todo->setTask($content->task);
